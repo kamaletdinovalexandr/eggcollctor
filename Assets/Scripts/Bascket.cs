@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bascketControls : MonoBehaviour {
+public class Bascket : MonoBehaviour {
     
     [SerializeField] private Transform basket;
 
@@ -47,10 +47,18 @@ public class bascketControls : MonoBehaviour {
         
         if (!_isUp && !_isLeft)
             basket.position = _rightDown.position;
-        
-        
+    }
 
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.tag == "egg") {
+            GameController.Instance.IncrementScore();
+            Destroy(other.gameObject);
+        }
 
-
-    } 
+        if (other.gameObject.tag == "superegg") {
+            GameController.Instance.IncrementScore();
+            GameController.Instance.SlowMotionEffect();
+            Destroy(other.gameObject);
+        }
+    }
 }
